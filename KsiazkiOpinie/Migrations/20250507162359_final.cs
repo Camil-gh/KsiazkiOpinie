@@ -10,7 +10,8 @@ namespace KsiazkiOpinie.Migrations
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.DropForeignKey(
+           
+            /*migrationBuilder.DropForeignKey(
                 name: "FK_Comments_Users_UserId",
                 table: "Comments");
 
@@ -33,6 +34,7 @@ namespace KsiazkiOpinie.Migrations
             migrationBuilder.DropColumn(
                 name: "UserId",
                 table: "Comments");
+                */
             // to całe usunąć jak nie będzie potrzebne
         }
 

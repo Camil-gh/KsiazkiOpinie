@@ -1,0 +1,63 @@
+﻿@model KsiazkiOpinie.Models.Book
+
+@{
+    ViewData["Title"] = "Szczegóły Książki";
+}
+
+<h1 class="title is-2 has-text-white">Szczegóły Książki</h1>
+
+<div class="card">
+    <div class="card-content">
+        <div class="content">
+            <h2 class="title is-4 has-text-white">Tytuł: @Model.Title</h2>
+
+            <p class="has-text-white"><strong>Opis:</strong><br /> @Model.Description</p>
+
+            <p class="has-text-white"><strong>Dodana przez:</strong> @Model.User?.Name</p>
+
+            <p class="has-text-white"><strong>Autorzy:</strong></p>
+            @if (Model.AuthorBooks != null && Model.AuthorBooks.Any())
+            {
+                <ul class="has-text-white">
+                    @foreach (var authorBook in Model.AuthorBooks)
+                    {
+                        <li>@authorBook.Author?.Name</li>
+                    }
+                </ul>
+            }
+            else
+            {
+                <p class="has-text-white"><em>Brak przypisanych autorów.</em></p>
+            }
+
+            <p class="has-text-white"><strong>Kategorie:</strong></p>
+            @if (Model.CategoryBooks != null && Model.CategoryBooks.Any())
+            {
+                <ul class="has-text-white">
+                    @foreach (var categoryBook in Model.CategoryBooks)
+                    {
+                        <li>@categoryBook.Category?.Name</li>
+                    }
+                </ul>
+            }
+            else
+            {
+                <p class="has-text-white"><em>Brak przypisanych kategorii.</em></p>
+            }
+
+            @{
+                var ratings = Model.Ratings;
+                var averageRating = ratings != null && ratings.Any() ? ratings.Average(r => r.Value): 1;
+            }
+            <p class="has-text-white"><strong>Ocena średnia:</strong> @averageRating</p>
+
+            
+        </div>
+    </div>
+
+    <footer class="bottom-buttons-details">
+        <a asp-action="Index" class="button">⪡</a>
+        <a asp-action="Edit" asp-route-id="@Model.Id" class="button">Edytuj</a>
+        <a asp-controller="Comments" asp-action="ViewComment" asp-route-id="@Model.Id" class="button">Komentarze</a>
+    </footer>
+</div>

@@ -1,0 +1,84 @@
+﻿@model KsiazkiOpinie.ViewModels.BookCreateViewModel
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<h1>Edit Book</h1>
+<hr />
+
+<div class="row">
+    <div class="col-md-6">
+        <form asp-action="Edit">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+            <input type="hidden" asp-for="Book.Id" />
+
+            <div class="form-group">
+                <label asp-for="Book.Title" class="control-label"></label>
+                <input asp-for="Book.Title" class="form-control" />
+                <span asp-validation-for="Book.Title" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="Book.Description" class="control-label"></label>
+                <input asp-for="Book.Description" class="form-control" />
+                <span asp-validation-for="Book.Description" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="Book.UserId" class="control-label"></label>
+                <select asp-for="Book.UserId" class="form-control" asp-items="Model.Users"></select>
+                <span asp-validation-for="Book.UserId" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label>Authors</label>
+                <div>
+                    @foreach (var author in Model.Authors)
+                    {
+                        <div class="form-check">
+                            <input type="checkbox"
+                                   class="form-check-input"
+                                   name="SelectedAuthorIds"
+                                   value="@author.Value"
+                            @(Model.SelectedAuthorIds.Contains(int.Parse(author.Value)) ? "checked" : "") />
+                            <label class="form-check-label">@author.Text</label>
+                        </div>
+                    }
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label>Categories</label>
+                <div>
+                    @foreach (var category in Model.Categories)
+                    {
+                        <div class="form-check">
+                            <input type="checkbox"
+                                   class="form-check-input"
+                                   name="SelectedCategoryIds"
+                                   value="@category.Value"
+                            @(Model.SelectedCategoryIds.Contains(int.Parse(category.Value)) ? "checked" : "") />
+                            <label class="form-check-label">@category.Text</label>
+                        </div>
+                    }
+                </div>
+            </div>
+
+            <div class="form-group mt-3">
+                <input type="submit" value="Save Changes" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

@@ -1,0 +1,62 @@
+﻿@model KsiazkiOpinie.Models.Book
+
+@{
+    ViewData["Title"] = "Komentarze do książki";
+}
+
+<h1 class="title is-3 has-text-white">Komentarze do: @Model.Title</h1>
+
+@if (Model.Comments != null && Model.Comments.Any())
+{
+    <div class="box">
+        @foreach (var comment in Model.Comments)
+        {
+            <article class="media">
+                <div class="media-content">
+                    <div class="content">
+                        <p class="has-text-white">
+                            <strong>@comment.AuthorName</strong>
+                            <br />
+
+                            @comment.Content
+                        </p>
+                        <a asp-controller="Comments" asp-action="Delete" asp-route-id="@comment.Id" class="button is-small is-danger is-light ml-2">Usuń</a>
+                        <a asp-controller="Comments" asp-action="Edit" asp-route-id="@comment.Id" class="button is-small is-danger is-light ml-2">Edytuj</a>
+                    </div>
+                </div>
+            </article>
+        }
+    </div>
+}
+else
+{
+    <p class="has-text-white"><em>Brak komentarzy.</em></p>
+}
+
+<hr />
+
+<h2 class="title is-4 has-text-white">Dodaj komentarz</h2>
+
+<form asp-controller="Comments" asp-action="AddComment" method="post">
+    <input type="hidden" name="BookId" value="@Model.Id" />
+
+    <div class="field">
+        <label class="label has-text-white">Twoje imię</label>
+        <div class="control">
+            <input class="input" type="text" name="AuthorName" required />
+        </div>
+    </div>
+
+    <div class="field">
+        <label class="label has-text-white">Treść komentarza</label>
+        <div class="control">
+            <textarea class="textarea" name="Content" required></textarea>
+        </div>
+    </div>
+
+    <div class="control">
+        <button class="button is-link" type="submit">Dodaj komentarz</button>
+    </div>
+</form>
+
+<a asp-controller="Books" asp-action="Details" asp-route-id="@Model.Id" class="button mt-4">⪡ Wróć do książki</a>

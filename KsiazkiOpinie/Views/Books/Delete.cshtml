@@ -1,0 +1,18 @@
+﻿@model KsiazkiOpinie.Models.Comment
+
+@{
+    ViewData["Title"] = "Usuń komentarz";
+}
+
+<h2 class="title is-4 has-text-danger">Czy na pewno chcesz usunąć komentarz?</h2>
+
+<div class="box">
+    <p><strong>Autor:</strong> @Model.AuthorName</p>
+    <p><strong>Treść:</strong> @Model.Content</p>
+</div>
+
+<form asp-action="Delete" method="post">
+    <input type="hidden" asp-for="Id" />
+    <button type="submit" class="button is-danger">Usuń</button>
+    <a asp-action="ViewComment" asp-route-id="@Model.BookId" class="button is-light">Anuluj</a>
+</form>
